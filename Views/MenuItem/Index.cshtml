@@ -1,0 +1,110 @@
+﻿@model IEnumerable<TruYum_Asp.Models.MenuItems>
+
+@{
+    if (ViewBag.isAdmin == true)
+    {
+
+        ViewBag.Title = "Admin";
+    }
+    else
+    {
+        ViewBag.Title = "Customer";
+    }
+}
+
+<h2>Menu Items</h2>
+
+@if (Model.Count() == 0)
+{
+    <caption> No Items </caption>
+}
+else
+{
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FreeDelivery)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            @if (ViewBag.isAdmin == true)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.isActive)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfLaunch)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th>Action </th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FreeDelivery)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @if (ViewBag.isAdmin == true)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.isActive)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfLaunch)
+                    </td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+
+                @if (ViewBag.isAdmin == true)
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Add To Cart", "AddToCart", "Cart", new { menuitemId = item.Id }, null)
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+
+    @if (ViewBag.isAdmin == true)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+
+

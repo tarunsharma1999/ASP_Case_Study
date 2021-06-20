@@ -1,0 +1,25 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<br />
+<h4>
+    Sorry, an error occurred while processing your request.
+    <br />
+    Name Of Action:
+    @ViewContext.RouteData.Values["action"].ToString()
+    <br />
+
+    Name Of Controller:
+    @ViewContext.RouteData.Values["controller"].ToString()
+    <br />
+
+    Error Message:
+    @ViewBag.e.Message
+    <br />
+
+</h4>
+<br />
+<h6>@Html.ActionLink("Go Back To Home Page", "Index", "MenuItem")</h6>

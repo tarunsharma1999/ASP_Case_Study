@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TruYum_Asp.Models.Cart>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>View Cart </h2>
+
+@if (Model.Count() == 0)
+{
+    <caption>
+        No items in Cart.
+
+    </caption>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuItem.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuItem.FreeDelivery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuItem.Price)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItem.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItem.FreeDelivery)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItem.Price)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Remove", "Delete", new { id = item.MenuItem.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+@Html.ActionLink("View Menu items", "index", "MenuItem")
+

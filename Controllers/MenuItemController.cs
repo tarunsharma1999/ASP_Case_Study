@@ -10,39 +10,40 @@ namespace TruYum_ASP.Controllers
 {
     public class MenuItemController : Controller
     {
-        private truYumContext _context = new truYumContext();
-       
+        private static truYumContext _context = new truYumContext();
+        private List<Category> categories = _context.Categories.ToList();
+
         // GET: MenuItem
         public ActionResult Index(bool isAdmin=false)
         {
             ViewBag.isAdmin = isAdmin;
             if(isAdmin==true)
             {
-                return View(_context.MenuItem.Include("Category").ToList());
+                return View(_context.MenuItem.Include("Category").OrderBy(x=>x.Name).ToList());
             }
 
-            var x2= _context.MenuItem.Include("Category").Where(x => x.isActive == true).ToList();
-            List<MenuItems> menuItems = new List<MenuItems>();
-            foreach(var i in x2)
+            var ActiveItems= _context.MenuItem.Include("Category").Where(x => x.isActive == true).ToList();
+            List<MenuItems> CustMenuItems = new List<MenuItems>();
+            foreach (var items in ActiveItems)
             {
                 DateUtility nobj = new DateUtility();
-                if(nobj.checkDate(i.DateOfLaunch))
+                if (nobj.checkDate(items.DateOfLaunch))
                 {
-                    menuItems.Add(i);
+                    CustMenuItems.Add(items);
                 }
             }
-            return View(menuItems);
+            return View(CustMenuItems);
             
         }
         public ActionResult Create()
         {
-            var categories = _context.Categories.ToList();
+            
             
             ViewBag.Categories = categories;
             return View();
         }
         [HttpPost]
-        public ActionResult Create(MenuItems m)
+        public ActionResult Create(MenuItems item)
         {
             if(!ModelState.IsValid)
             {
@@ -51,7 +52,7 @@ namespace TruYum_ASP.Controllers
             try
             {
 
-                _context.MenuItem.Add(m);
+                _context.MenuItem.Add(item);
                 _context.SaveChanges();
                 return RedirectToAction("Index", new { isAdmin = true });
             }
@@ -74,7 +75,6 @@ namespace TruYum_ASP.Controllers
             }
             try
             {
-                var categories = _context.Categories.ToList();
                 ViewBag.Categories = categories;
                 return View(m);
             }

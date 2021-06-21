@@ -6,17 +6,11 @@
 
 <br />
 <h4>
-    Sorry, an error occurred while processing your request.
-    <br />
-    Name Of Action:
-    @ViewContext.RouteData.Values["action"].ToString()
+    Exception occurred in [@ViewContext.RouteData.Values["action"].ToString()] method of [@ViewContext.RouteData.Values["controller"].ToString()].
+
     <br />
 
-    Name Of Controller:
-    @ViewContext.RouteData.Values["controller"].ToString()
-    <br />
-
-    Error Message:
+    Exception Message:
     @ViewBag.e.Message
     <br />
 

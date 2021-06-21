@@ -16,6 +16,7 @@ namespace TruYum_Asp.Models
         public string Name { get; set; }
 
         [Required]
+        [Range(1,999)]
         public float Price { get; set; }
 
         public bool isActive { get; set; }

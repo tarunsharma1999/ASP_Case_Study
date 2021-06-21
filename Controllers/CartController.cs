@@ -21,18 +21,18 @@ namespace TruYum_ASP.Controllers
                      select od).ToList();*/
             
             var q = _context.Cart.Include("MenuItem").Where(x => x.UserId == UserId && x.MenuItem.isActive == true).ToList();
-            List<MenuItems> menuItems = new List<MenuItems>();
+            List<Cart> menuItems = new List<Cart>();
             foreach (var i in q)
             {
                 
                 DateUtility nobj = new DateUtility();
                 if (nobj.checkDate(i.MenuItem.DateOfLaunch))
                 {
-                    menuItems.Add(i.MenuItem);
+                    
+                    menuItems.Add(i);
                 }
             }
-            
-            return View(q);
+            return View(menuItems);
         }
 
         public ActionResult AddToCart(int? menuitemId)
